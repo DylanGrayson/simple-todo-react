@@ -1,25 +1,86 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import GroupList from './components/group_list';
+
+const TASK_PAYLOAD = [
+  {
+    id: 1,
+    group: "Purchases",
+    task: "Go to the bank",
+    dependencyIds: [],
+    completedAt: null,
+  },
+  {
+    id: 2,
+    group: "Purchases",
+    task: "Buy hammer",
+    dependencyIds: [1],
+    completedAt: null,
+  },
+  {
+    id: 3,
+    group: "Purchases",
+    task: "Buy wood",
+    dependencyIds: [1],
+    completedAt: null,
+  },
+  {
+    id: 4,
+    group: "Purchases",
+    task: "Buy nails",
+    dependencyIds: [1],
+    completedAt: null,
+  },
+  {
+    id: 5,
+    group: "Purchases",
+    task: "Buy paint",
+    dependencyIds: [1],
+    completedAt: null,
+  },
+  {
+    id: 6,
+    group: "Build Airplane",
+    task: "Hammer nails into wood",
+    dependencyIds: [2, 3, 4],
+    completedAt: null,
+  },
+  {
+    id: 7,
+    group: "Build Airplane",
+    task: "Paint wings",
+    dependencyIds: [5, 6],
+    completedAt: null,
+  },
+  {
+    id: 8,
+    group: "Build Airplane",
+    task: "Have a snack",
+    dependencyIds: [],
+    completedAt: null,
+  }
+]
 
 class App extends Component {
+  getGroups() {
+    let groups = {}
+    for (let task of TASK_PAYLOAD) {
+      if (task.group in groups) {
+        groups[task.group].total += 1
+        groups[task.group].completed += task.completedAt !== null ? 1 : 0
+      } else {
+        groups[task.group] = {
+          total: 1,
+          completed: task.completedAt !== null ? 1 : 0
+        }
+      }
+    }
+    return groups
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <GroupList groups={this.getGroups()} />
       </div>
     );
   }
