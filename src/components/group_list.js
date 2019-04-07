@@ -10,12 +10,13 @@ export default class GroupList extends Component {
 			const total = groups[name].total
 			const info = `${completed} OF ${total} TASKS COMPLETE`
 			const group = {name, info}
-			items.push(<GroupListItem group={group} />)
+			items.push(<GroupListItem key={name} group={group}/>)
 		}
 		return (
 			<div>
 				<h1>Things To Do</h1>
-				<ul>
+				<hr/>
+				<ul className="uk-list uk-list-divider uk-list-large">
 					{items}
 				</ul>
 			</div>

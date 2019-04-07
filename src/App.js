@@ -1,70 +1,31 @@
 import React, { Component } from 'react';
 import './App.css';
 import GroupList from './components/group_list';
+import { TASK_PAYLOAD } from './utils/data';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import TaskList from './components/task_list';
 
-const TASK_PAYLOAD = [
-  {
-    id: 1,
-    group: "Purchases",
-    task: "Go to the bank",
-    dependencyIds: [],
-    completedAt: null,
-  },
-  {
-    id: 2,
-    group: "Purchases",
-    task: "Buy hammer",
-    dependencyIds: [1],
-    completedAt: null,
-  },
-  {
-    id: 3,
-    group: "Purchases",
-    task: "Buy wood",
-    dependencyIds: [1],
-    completedAt: null,
-  },
-  {
-    id: 4,
-    group: "Purchases",
-    task: "Buy nails",
-    dependencyIds: [1],
-    completedAt: null,
-  },
-  {
-    id: 5,
-    group: "Purchases",
-    task: "Buy paint",
-    dependencyIds: [1],
-    completedAt: null,
-  },
-  {
-    id: 6,
-    group: "Build Airplane",
-    task: "Hammer nails into wood",
-    dependencyIds: [2, 3, 4],
-    completedAt: null,
-  },
-  {
-    id: 7,
-    group: "Build Airplane",
-    task: "Paint wings",
-    dependencyIds: [5, 6],
-    completedAt: null,
-  },
-  {
-    id: 8,
-    group: "Build Airplane",
-    task: "Have a snack",
-    dependencyIds: [],
-    completedAt: null,
-  }
-]
 
 class App extends Component {
+  constructor() {
+    super()
+    let tasks = {}
+    for (let task of TASK_PAYLOAD) {
+      tasks[task.id] = task
+    }
+    this.state = { tasks }
+    this.checkHandler = this.checkHandler.bind(this)
+  }
+  checkHandler(e) {
+    const id = e.currentTarget.id
+    const now = Date.now()
+    let tasks = this.state.tasks
+    tasks[id].completedAt = now;
+    this.setState({tasks})
+  }
   getGroups() {
     let groups = {}
-    for (let task of TASK_PAYLOAD) {
+    for (let task of Object.values(this.state.tasks)) {
       if (task.group in groups) {
         groups[task.group].total += 1
         groups[task.group].completed += task.completedAt !== null ? 1 : 0
@@ -79,9 +40,21 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="App">
-        <GroupList groups={this.getGroups()} />
-      </div>
+      <Router>
+        <div className="App">
+          <Route exact path="/" render={() => <GroupList groups={this.getGroups()} />} />
+          <Route
+            path="/:group"
+            render={
+              (group) => <TaskList
+                tasks={this.state.tasks}
+                group={group.match.params.group}
+                checkHandler={this.checkHandler}
+                />
+            }
+          />
+        </div>
+      </Router>
     );
   }
 }
