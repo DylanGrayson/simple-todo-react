@@ -18,6 +18,7 @@ export default class ListItem extends Component {
 		} else {
 			checkBox = <img src={checked} alt="Complete" />
 			classes = "strikethrough"
+			onClick = checkHandler
 		}
 		return (
 			<li className="task-item" onClick={onClick} id={item.id}>

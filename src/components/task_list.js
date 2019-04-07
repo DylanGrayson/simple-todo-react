@@ -28,7 +28,7 @@ export default class TaskList extends Component {
 					<h1>{ group }</h1>
 					<Link to="/" className="uk-align-right">ALL GROUPS</Link>
 				</div>
-				<ul className="uk-list uk-list-large">
+				<ul className="uk-list uk-list-large uk-list-divider">
 					{listItems}
 				</ul>
 			</div>

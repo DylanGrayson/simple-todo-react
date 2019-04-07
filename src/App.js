@@ -20,7 +20,12 @@ class App extends Component {
     const id = e.currentTarget.id
     const now = Date.now()
     let tasks = this.state.tasks
-    tasks[id].completedAt = now;
+    const task = tasks[id]
+    if (task.completedAt == null){
+      tasks[id].completedAt = now;
+    } else {
+      tasks[id].completedAt = null;
+    }
     this.setState({tasks})
   }
   getGroups() {
