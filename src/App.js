@@ -7,16 +7,21 @@ import TaskList from './components/task_list';
 
 
 class App extends Component {
-  constructor() {
-    super()
+  /* The main application for the app. The Router is
+  * in the render */
+  constructor(props) {
+    // digest task list as object for easier lookup later on.
+    super(props)
     let tasks = {}
     for (let task of TASK_PAYLOAD) {
       tasks[task.id] = task
     }
     this.state = { tasks }
+    // bind this handler because it's being passed to a child
     this.checkHandler = this.checkHandler.bind(this)
   }
   checkHandler(e) {
+    // Toggle the createdAt value on a given task from null to now
     const id = e.currentTarget.id
     const now = Date.now()
     let tasks = this.state.tasks
@@ -29,6 +34,8 @@ class App extends Component {
     this.setState({tasks})
   }
   getGroups() {
+    // get object representing the distinct groups mapped to their
+    // number of completed tasks/total tasks.
     let groups = {}
     for (let task of Object.values(this.state.tasks)) {
       if (task.group in groups) {
@@ -47,7 +54,9 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Route exact path="/" render={() => <GroupList groups={this.getGroups()} />} />
+          <Route exact path="/" render={() => {
+            return <GroupList groups={this.getGroups()} />
+          }} />
           <Route
             path="/:group"
             render={

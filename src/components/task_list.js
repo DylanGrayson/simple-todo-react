@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ListItem from './list_item'
+import ListItem from './task_list_item'
 import { Link } from 'react-router-dom'
 
 export default class TaskList extends Component {

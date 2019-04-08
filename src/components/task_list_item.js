@@ -15,15 +15,17 @@ export default class ListItem extends Component {
 		} else if (item.completedAt === null) {
 			checkBox = <img src={unchecked} alt="Incomplete" />
 			onClick = checkHandler
+			classes = "task-item"
 		} else {
 			checkBox = <img src={checked} alt="Complete" />
 			classes = "strikethrough"
 			onClick = checkHandler
+			classes = "task-item"
 		}
 		return (
-			<li className="task-item" onClick={onClick} id={item.id}>
+			<li className={classes} onClick={onClick} id={item.id}>
 				<span className="uk-padding-small">{checkBox}</span>
-				<span className={classes}>{item.task}</span>
+				<span>{item.task}</span>
 			</li>
 		)
 	}

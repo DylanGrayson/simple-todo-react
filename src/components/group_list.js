@@ -13,7 +13,7 @@ export default class GroupList extends Component {
 			items.push(<GroupListItem key={name} group={group}/>)
 		}
 		return (
-			<div>
+			<div className="uk-container uk-container-small">
 				<h1>Things To Do</h1>
 				<hr/>
 				<ul className="uk-list uk-list-divider uk-list-large">
