@@ -14,7 +14,7 @@ export default class GroupList extends Component {
 		}
 		return (
 			<div className="uk-container uk-container-small">
-				<h1>Things To Do</h1>
+				<h1>Things I will never ever do.</h1>
 				<hr/>
 				<ul className="uk-list uk-list-divider uk-list-large">
 					{items}
