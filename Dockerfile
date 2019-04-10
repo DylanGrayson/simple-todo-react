@@ -9,4 +9,4 @@ COPY package.json /usr/src/todolist/package.json
 RUN npm install
 RUN npm install react-scripts@1.1.1 -g
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "build"]
